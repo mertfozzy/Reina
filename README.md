@@ -14,35 +14,8 @@ Project Scope Definition & Requirement List
 
 **Project Summary :**“An Android mobile chat application developed in Java and Firebase.” **Project Developers :**Mert Altuntaş, Kaan Çeliktaş, Alperen Demirtürkoğlu
 
-1
 
-[**Project Scope Definition & Requirement List](#_page0_x72.00_y554.35) **1 [Project Description](#_page2_x36.85_y36.85)** 3 [Requirement List](#_page2_x36.85_y194.81) 3 [Functional Requirements](#_page2_x36.85_y233.95) 3
-
-[End-User Functions](#_page2_x36.85_y253.77) [3 ](#_page2_x36.85_y253.77)[Viewing Profile Informations (Picture + Name + Status)](#_page2_x36.85_y272.27) 3 [Personal / Private Chatting](#_page2_x36.85_y322.51) 3
-
-[Group Chatting](#_page2_x36.85_y384.76) [3 ](#_page2_x36.85_y384.76)[Message Request System](#_page2_x36.85_y461.54) 3 [Online/Offline Status](#_page2_x36.85_y523.79) 3
-
-[Sending a PDF -or DOC](#_page2_x36.85_y586.04) [3 ](#_page2_x36.85_y586.04)[Sending an Image](#_page2_x36.85_y633.75) [3](#_page2_x36.85_y633.75)
-
-[Delete Message System](#_page2_x36.85_y681.46) 3 [Operator Functions](#_page3_x36.85_y36.85) [4 ](#_page3_x36.85_y36.85)[Login, Signup to the Application](#_page3_x36.85_y55.35) 4 [Login & Signup Interface Design](#_page3_x36.85_y105.60) 4 [Firebase Authentication for Login](#_page3_x36.85_y151.99) 4
-
-[Using Phone Number for Login](#_page3_x36.85_y227.45) [4 ](#_page3_x36.85_y227.45)[Logout Functions](#_page3_x36.85_y288.37) [4](#_page3_x36.85_y288.37)
-
-[Message and Chat Activity Functions](#_page3_x36.85_y334.77) 4 [Group Chat Activity](#_page3_x36.85_y363.94) [4](#_page3_x36.85_y363.94)
-
-[Sending and Receiving Message](#_page3_x36.85_y398.33) 4 [Last Seen and Online Status](#_page3_x36.85_y459.26) 4
-
-[Message Request](#_page3_x36.85_y520.19) 4 [Sending Image and Documents Features](#_page3_x36.85_y581.11) 4
-
-[Deleting Messages](#_page3_x36.85_y642.04) 4 [General Interface Functions](#_page3_x36.85_y688.43) 4
-
-[View My Profile Section](#_page3_x36.85_y717.61) 4 [Viewing Available Contacts](#_page4_x36.85_y36.85) 5
-
-[Chat Window Transactions (Scrollview)](#_page4_x36.85_y85.78) [5 ](#_page4_x36.85_y85.78)[Nonfunctional Requirements](#_page4_x36.85_y146.70) 5 [Connecting to a web app](#_page4_x36.85_y182.52) 5
-
-[Lock and unlock with fingerprint](#_page4_x36.85_y232.77) [5 ](#_page4_x36.85_y232.77)[Speech to text message sending](#_page4_x36.85_y297.02) 5 [Adding stories section for users](#_page4_x36.85_y361.26) 5 [End to end encryption](#_page4_x36.85_y425.51) 5 [Sending stickers, GIFs](#_page4_x36.85_y489.76) [5 ](#_page4_x36.85_y489.76)[Video/Voice call](#_page4_x36.85_y554.01) [5 ](#_page4_x36.85_y554.01)[Potential Users](#_page5_x36.85_y51.39) 6 Commercialization Potential 6
-
-1. Project Description
+#1. Project Description
 
 Reina Messenger is a mobile chat application that supports the Android operating system. It is designed to make it easier for people to text-based messages and share documents with each other on the mobile platform.
 
@@ -50,7 +23,7 @@ Users who want to use Reina have to create their own accounts. At this point, un
 
 It is builded in Java programming language, also the database is managed with Google’s Firebase.
 
-2. Requirement List
+#2. Requirement List
 1. Functional Requirements
 1. End-User Functions
 
@@ -173,7 +146,7 @@ Stickers and GIFs expressing emotions during chat can strengthen the communicati
 
 With video or audio calling features, communication can reach the next level. In this way, text-message disadvantages are overcome at more important moments.
 
-3.Potential Users
+#3.Potential Users
 
 **Users of small groups:**
 

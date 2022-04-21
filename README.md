@@ -1,16 +1,10 @@
-# Reina
+# Reina Messenger
 An Android mobile chat application developed in Java and Firebase.
-BEYKOZ UNIVERSITY
 
-Architecture and Engineering Faculty / Computer Engineering
-
-ENGINEERING PROJECT III - Spring 2022
-
-Project Scope Definition & Requirement List
 
 **Project Name :**Reina Messenger
 
-**Project Link :[Reina on Github](https://github.com/mertfozzy/Reina)**
+**Project Link : [Reina on Github](https://github.com/mertfozzy/Reina)**
 
 **Project Summary :**“An Android mobile chat application developed in Java and Firebase.” **Project Developers :**Mert Altuntaş, Kaan Çeliktaş, Alperen Demirtürkoğlu
 

@@ -1,12 +1,7 @@
 # Reina Messenger
 An Android mobile chat application developed in Java and Firebase.
 
-
-**Project Name :**Reina Messenger
-
-**Project Link : [Reina on Github](https://github.com/mertfozzy/Reina)**
-
-**Project Summary :**“An Android mobile chat application developed in Java and Firebase.” **Project Developers :**Mert Altuntaş, Kaan Çeliktaş, Alperen Demirtürkoğlu
+Project Developers : Mert Altuntaş, Kaan Çeliktaş, Alperen Demirtürkoğlu
 
 
 ## 1. Project Description

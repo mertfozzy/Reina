@@ -16,12 +16,28 @@
 
         <include
             android:id="@+id/main_page_toolbar"
-            layout="@layout/app_bar_layout"
-            >
-
+            layout="@layout/app_bar_layout">
         </include>
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/main_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            >
+
+        </com.google.android.material.tabs.TabLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/main_tabs_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appBarLayout"
+        >
+
+    </androidx.viewpager.widget.ViewPager>
 
 
 

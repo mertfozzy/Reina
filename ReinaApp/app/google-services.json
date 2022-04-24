@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "323376763165",
+    "project_id": "reina-6445c",
+    "storage_bucket": "reina-6445c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323376763165:android:e29b72e7cce4369a6a51f4",
+        "android_client_info": {
+          "package_name": "com.example.reina"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323376763165-t98c0o24i6d89be77jou1danrt6sjl0f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwvq9B6Y9JwFI3T8cicB-HmEAAWy8W-gw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323376763165-t98c0o24i6d89be77jou1danrt6sjl0f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

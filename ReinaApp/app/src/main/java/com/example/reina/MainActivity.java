@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,6 +16,9 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager myViewPager;
     private TabLayout myTabLayout;
     private TabAccessAdapter myTabAccessAdapter;
+
+    //Firebase Auth
+    private FirebaseUser existUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,5 +36,19 @@ public class MainActivity extends AppCompatActivity {
         myTabLayout = findViewById(R.id.main_tabs);
         myTabLayout.setupWithViewPager(myViewPager);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (existUser == null){
+            send_user_to_LoginActivity();
+        }
+    }
+
+    private void send_user_to_LoginActivity() {
+        Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(loginIntent);
     }
 }

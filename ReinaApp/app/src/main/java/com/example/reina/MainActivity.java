@@ -16,6 +16,6 @@ public class MainActivity extends AppCompatActivity {
 
         mToolbar = findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Reina");
+        getSupportActionBar().setTitle("Reina Messenger");
     }
 }

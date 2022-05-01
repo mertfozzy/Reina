@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Firebase Auth
     private FirebaseUser existUser;
+    private FirebaseAuth mAuthentication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
 
         myTabLayout = findViewById(R.id.main_tabs);
         myTabLayout.setupWithViewPager(myViewPager);
+
+        //Firebase
+        mAuthentication = FirebaseAuth.getInstance();
+        existUser = mAuthentication.getCurrentUser();
 
     }
 

@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView signupNew, forgetPassword;
 
     //Firebase
-    private FirebaseUser existUser;
+    //private FirebaseUser existUser;
     private FirebaseAuth mAuthentication;
 
     //Progress
@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //Firebase
         mAuthentication = FirebaseAuth.getInstance();
-        existUser = mAuthentication.getCurrentUser();
+        //existUser = mAuthentication.getCurrentUser();
 
         signupNew.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +97,10 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (task.isSuccessful()){
                         Intent mainScreen = new Intent(LoginActivity.this, MainActivity.class);
+                        mainScreen.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(mainScreen);
+                        finish();
+
                         Toast.makeText(LoginActivity.this, "Login successful.", Toast.LENGTH_SHORT).show();
                         loginDialog.dismiss();
                     }
@@ -112,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     }
-
+/*
     @Override
     protected void onStart() {
         super.onStart();
@@ -121,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
             send_user_to_MainActivity();
         }
     }
-
+*/
     private void send_user_to_MainActivity() {
         Intent mainIntent = new Intent(LoginActivity.this, com.example.reina.MainActivity.class);
         startActivity(mainIntent);

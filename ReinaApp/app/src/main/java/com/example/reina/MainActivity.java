@@ -9,10 +9,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     //Firebase Auth
     private FirebaseUser existUser;
     private FirebaseAuth mAuthentication;
+    private DatabaseReference usersReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         //Firebase
         mAuthentication = FirebaseAuth.getInstance();
         existUser = mAuthentication.getCurrentUser();
-
+        usersReference = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -54,11 +61,45 @@ public class MainActivity extends AppCompatActivity {
         if (existUser == null){
             send_user_to_LoginActivity();
         }
+
+        else{
+            verifyIfUserExist();
+        }
+    }
+
+    private void verifyIfUserExist() {
+
+        String existUserID = mAuthentication.getCurrentUser().getUid();
+
+        usersReference.child("Users").child(existUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if ((dataSnapshot.child("name").exists())){
+                    Toast.makeText(MainActivity.this, "Welcome..", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
+                    settings.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(settings);
+                    finish();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     private void send_user_to_LoginActivity() {
         Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+        loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(loginIntent);
+        finish();
     }
 
     @Override

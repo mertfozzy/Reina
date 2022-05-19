@@ -5,8 +5,6 @@ An Android mobile chat application developed in Java and Firebase.
 
 ## Project Developers : 
 - Mert Altuntaş 
-- Kaan Çeliktaş
-- Alperen Demirtürkoğlu
 
 
 ## 1. Project Description

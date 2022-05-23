@@ -36,8 +36,7 @@
         android:id="@+id/main_tabs_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/appBarLayout"
-        >
+        android:layout_below="@+id/appBarLayout">
 
     </androidx.viewpager.widget.ViewPager>
 

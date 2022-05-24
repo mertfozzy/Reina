@@ -49,7 +49,8 @@ public class GroupsFragment extends Fragment {
 
         //Definitions
         listView = groupFragmentView.findViewById(R.id.list_view);
-        arrayAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1, group_lists);
+        //arrayAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1, group_lists);
+        arrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.row, group_lists);
         listView.setAdapter(arrayAdapter);
 
         //Fetch Groups

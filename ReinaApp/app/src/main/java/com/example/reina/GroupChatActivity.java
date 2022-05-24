@@ -1,6 +1,7 @@
 package com.example.reina;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -19,6 +20,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+
 public class GroupChatActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
@@ -29,24 +34,25 @@ public class GroupChatActivity extends AppCompatActivity {
 
     //Firebase
     private FirebaseAuth mAuthentication;
-    private DatabaseReference userPath;
+    private DatabaseReference userPath, groupNamePath, groupMessageKeyPath;
 
     //Intent
-    private String existGroupName, activeUserID, getActiveUserName ;
+    private String existGroupName, activeUserID, getActiveUserName, activeDate, activeTime ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_chat);
 
+        //fetch Intent
+        existGroupName = getIntent().getExtras().get("GroupName").toString();
+        Toast.makeText(this, existGroupName, Toast.LENGTH_LONG).show();
+
         //Firebase
         mAuthentication = FirebaseAuth.getInstance();
         activeUserID = mAuthentication.getCurrentUser().getUid();
         userPath = FirebaseDatabase.getInstance().getReference().child("Users");
-
-        //fetch Intent
-        existGroupName = getIntent().getExtras().get("GroupName").toString();
-        Toast.makeText(this, existGroupName, Toast.LENGTH_LONG).show();
+        groupNamePath = FirebaseDatabase.getInstance().getReference().child("Groups").child(existGroupName);
 
         //definitons:
         mToolbar = findViewById(R.id.group_chat_bar_layout);
@@ -74,7 +80,27 @@ public class GroupChatActivity extends AppCompatActivity {
 
     private void saveMessageToDatabase() {
 
-        String message
+        String message = userMessageInput.getText().toString();
+        String messageKey = groupNamePath.push().getKey();
+
+        if (TextUtils.isEmpty(message)){
+            Toast.makeText(this, "Message cannot be empty.", Toast.LENGTH_LONG).show();
+        }
+
+        else{
+            Calendar dateForCalendar = Calendar.getInstance();
+            SimpleDateFormat activeDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+            activeDate = activeDateFormat.format(dateForCalendar.getTime());
+
+            Calendar timeForCalendar = Calendar.getInstance();
+            SimpleDateFormat activeTimeFormat = new SimpleDateFormat("hh:mm:ss a");
+            activeTime = activeTimeFormat.format(timeForCalendar.getTime());
+
+            HashMap<String, Object>groupMessageKey = new HashMap<>();
+            groupNamePath.updateChildren(groupMessageKey);
+
+            groupMessageKeyPath = groupNamePath.child(messageKey);
+        }
 
     }
 

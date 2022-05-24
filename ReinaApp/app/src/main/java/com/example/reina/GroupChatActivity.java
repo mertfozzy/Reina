@@ -37,7 +37,7 @@ public class GroupChatActivity extends AppCompatActivity {
     private DatabaseReference userPath, groupNamePath, groupMessageKeyPath;
 
     //Intent
-    private String existGroupName, activeUserID, getActiveUserName, activeDate, activeTime ;
+    private String existGroupName, activeUserID, activeUserName, activeDate, activeTime ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +73,8 @@ public class GroupChatActivity extends AppCompatActivity {
 
                 saveMessageToDatabase();
 
+                userMessageInput.setText("");
+
             }
         });
 
@@ -100,6 +102,15 @@ public class GroupChatActivity extends AppCompatActivity {
             groupNamePath.updateChildren(groupMessageKey);
 
             groupMessageKeyPath = groupNamePath.child(messageKey);
+
+            HashMap<String, Object>messageInformationMap = new HashMap<>();
+
+            messageInformationMap.put("name", activeUserName);
+            messageInformationMap.put("message", message);
+            messageInformationMap.put("date", activeDate);
+            messageInformationMap.put("time", activeTime);
+
+            groupMessageKeyPath.updateChildren(messageInformationMap);
         }
 
     }
@@ -111,7 +122,7 @@ public class GroupChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 if (snapshot.exists()){
-                    getActiveUserName = snapshot.child("name").getValue().toString();
+                    activeUserName = snapshot.child("name").getValue().toString();
                 }
 
             }

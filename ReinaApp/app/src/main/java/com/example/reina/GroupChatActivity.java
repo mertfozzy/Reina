@@ -74,7 +74,7 @@ public class GroupChatActivity extends AppCompatActivity {
 
     private void saveMessageToDatabase() {
 
-        
+        String message
 
     }
 

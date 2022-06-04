@@ -75,6 +75,7 @@
 
             <Button
                 android:id="@+id/login_button"
+                app:backgroundTint="@color/colorPrimaryDark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/forget_password"
@@ -123,6 +124,7 @@
 
             <Button
                 android:id="@+id/another_login_button"
+                app:backgroundTint="@color/colorPrimaryDark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/another_login_option"

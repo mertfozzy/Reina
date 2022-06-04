@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Reina">
         <activity
+            android:name=".PhoneLoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".GroupChatActivity"
             android:exported="false" />
         <activity

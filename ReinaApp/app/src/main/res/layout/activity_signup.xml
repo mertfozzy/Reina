@@ -56,11 +56,13 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="15dp"
-        android:background="@drawable/buttons"
         android:padding="8dp"
-        android:text="Sign up"
-        android:textColor="@color/colorPrimaryLight"
-        android:textSize="18sp"
+        android:text="Signup"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/buttons"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/colorPrimaryDark"
 
         />
 

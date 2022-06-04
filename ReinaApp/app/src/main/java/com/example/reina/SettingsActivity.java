@@ -1,9 +1,11 @@
 package com.example.reina;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -24,6 +26,7 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+
 public class SettingsActivity extends AppCompatActivity {
 
     private Button UpdateSettings;
@@ -35,6 +38,8 @@ public class SettingsActivity extends AppCompatActivity {
     private DatabaseReference dataPath;
 
     private String existUserID;
+
+    private static final int galleryOption = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,28 @@ public class SettingsActivity extends AppCompatActivity {
         userName.setVisibility(View.INVISIBLE);
 
         fetchUserInfo();
+
+        profilePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //open gallery when clicked
+                Intent galleryIntent = new Intent();
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent, galleryOption);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == galleryOption && resultCode == RESULT_OK && data != null){
+            Uri pictureUri = data.getData();
+
+        }
 
     }
 

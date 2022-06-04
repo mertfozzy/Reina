@@ -122,7 +122,8 @@ public class MainActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
 
         if (item.getItemId() == R.id.main_find_friend){
-
+            Intent findFriend = new Intent(MainActivity.this, FindFriend.class);
+            startActivity(findFriend);
         }
         if (item.getItemId() == R.id.main_settings){
             Intent settings = new Intent(MainActivity.this, SettingsActivity.class);

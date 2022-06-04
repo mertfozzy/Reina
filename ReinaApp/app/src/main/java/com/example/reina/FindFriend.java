@@ -1,10 +1,12 @@
 package com.example.reina;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 //import android.widget.Toolbar;
 import androidx.appcompat.widget.Toolbar;
 
@@ -29,5 +31,22 @@ public class FindFriend extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Find a Friend");
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //fecth data when start
+
+
+
+    }
+
+    public static class FindFriendViewHolder extends RecyclerView.ViewHolder{
+
+        public FindFriendViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
     }
 }

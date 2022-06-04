@@ -14,10 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Reina">
         <activity
+            android:name=".profileActivity"
+            android:exported="false" />
+        <activity
             android:name=".FindFriend"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
-            />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".PhoneLoginActivity"
             android:exported="false" />

@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -145,7 +146,9 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialog);
         builder.setTitle("Enter a Group Name: ");
         final EditText groupNameField = new EditText(MainActivity.this);
+        groupNameField.setTextColor(Color.BLACK);
         groupNameField.setHint("Example : Reina Developers");
+        groupNameField.setHintTextColor(Color.GRAY);
         builder.setView(groupNameField);
 
         builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {

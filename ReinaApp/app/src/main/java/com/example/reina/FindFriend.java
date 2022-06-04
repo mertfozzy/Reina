@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,9 +59,20 @@ public class FindFriend extends AppCompatActivity {
         FirebaseRecyclerAdapter<contacts, FindFriendViewHolder> adapter =
                 new FirebaseRecyclerAdapter<contacts, FindFriendViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull FindFriendViewHolder holder, int position, @NonNull contacts model) {
+            protected void onBindViewHolder(@NonNull FindFriendViewHolder holder, final int position, @NonNull contacts model) {
                 holder.userAbout.setText(model.getAbout());
                 holder.userName.setText(model.getName());
+
+                //when clicked
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String showClickedUserID = getRef(position).getKey();
+                        Intent goProfileActivity = new Intent(FindFriend.this, profileActivity.class);
+                        goProfileActivity.putExtra("showClickedUserID", showClickedUserID);
+                        startActivity(goProfileActivity);
+                    }
+                });
 
             }
 

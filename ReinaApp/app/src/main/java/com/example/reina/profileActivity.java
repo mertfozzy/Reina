@@ -3,6 +3,7 @@ package com.example.reina;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -111,7 +112,8 @@ public class profileActivity extends AppCompatActivity {
                     else{
 
                         activeStatus = "request_received";
-                        evaluationButton.setText("Accept the Chat Request");
+                        sendMessageButton.setText("Accept the Chat Request");
+
                         evaluationButton.setVisibility(View.VISIBLE);
                         evaluationButton.setEnabled(true);
                         evaluationButton.setOnClickListener(new View.OnClickListener() {

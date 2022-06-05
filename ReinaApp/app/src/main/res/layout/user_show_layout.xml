@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -69,6 +70,43 @@
                     android:textAlignment="textStart"
                     android:layout_margin="5dp"
                     android:id="@+id/user_profile_status"
+                    />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/accept_request_button"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/button2"
+                    android:text="Accept"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:visibility="invisible"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/decline_request_button"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/button3"
+                    android:text="Decline"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:visibility="invisible"
                     />
 
             </LinearLayout>

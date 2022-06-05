@@ -10,6 +10,8 @@
         <entry key="..\:/Users/mertf/Desktop/Reina/ReinaApp/app/src/main/res/layout/fragment_contacts.xml" value="0.3625" />
         <entry key="..\:/Users/mertf/Desktop/Reina/ReinaApp/app/src/main/res/layout/fragment_groups.xml" value="0.3625" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2095" />
+        <entry key="app/src/main/res/drawable/button2.xml" value="0.217" />
+        <entry key="app/src/main/res/drawable/button3.xml" value="0.217" />
         <entry key="app/src/main/res/drawable/buttons.xml" value="0.2335" />
         <entry key="app/src/main/res/drawable/ic_authenticate.xml" value="0.2095" />
         <entry key="app/src/main/res/drawable/inputs.xml" value="0.2335" />
@@ -26,6 +28,7 @@
         <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.3578125" />
         <entry key="app/src/main/res/layout/fragment_contacts.xml" value="0.2904178978471929" />
         <entry key="app/src/main/res/layout/fragment_groups.xml" value="0.3578125" />
+        <entry key="app/src/main/res/layout/fragment_requests.xml" value="0.2817443351859769" />
         <entry key="app/src/main/res/layout/row.xml" value="0.3578125" />
         <entry key="app/src/main/res/layout/user_show_layout.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/menu/options_menu.xml" value="0.31296296296296294" />

@@ -30,7 +30,7 @@ public class profileActivity extends AppCompatActivity {
     private Button sendMessageButton, evaluationButton;
 
     //firebase
-    private DatabaseReference userPath, chatRequestPath;
+    private DatabaseReference userPath, chatRequestPath, chatsPath;
     private FirebaseAuth mAuth;
 
     @Override
@@ -52,6 +52,7 @@ public class profileActivity extends AppCompatActivity {
 
         userPath = FirebaseDatabase.getInstance().getReference().child("Users");
         chatRequestPath = FirebaseDatabase.getInstance().getReference().child("Chat Request");
+        chatsPath = FirebaseDatabase.getInstance().getReference().child("Chats");
         mAuth = FirebaseAuth.getInstance();
         activeUserID = mAuth.getCurrentUser().getUid();
 
@@ -126,6 +127,29 @@ public class profileActivity extends AppCompatActivity {
                     }
                 }
 
+                else {
+
+                    chatsPath.child(activeUserID).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            if (snapshot.hasChild(fetchedUserID)){
+
+                                activeStatus = "contacts";
+                                sendMessageButton.setText("Clear This Chat");
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+
             }
 
             @Override
@@ -152,9 +176,96 @@ public class profileActivity extends AppCompatActivity {
                     if (activeStatus.equals("request_sent")){
                         cancelChatRequest();
                     }
+                    if (activeStatus.equals("request_received")){
+                        acceptChatRequest();
+                    }
+                    if (activeStatus.equals("contacts")){
+                        clearPrivateChat();
+                    }
                 }
             });
         }
+
+    }
+
+    private void clearPrivateChat() {
+
+        chatsPath.child(activeUserID).child(fetchedUserID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                if (task.isSuccessful()){
+                    chatsPath.child(fetchedUserID).child(activeUserID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            if (task.isSuccessful()){
+
+                                sendMessageButton.setEnabled(true);
+                                activeStatus = "new";
+                                sendMessageButton.setText("Send a Chat Request");
+
+                                evaluationButton.setVisibility(View.INVISIBLE);
+                                evaluationButton.setEnabled(false);
+
+                            }
+
+                        }
+                    });
+                }
+
+            }
+        });
+
+    }
+
+    private void acceptChatRequest() {
+
+        chatsPath.child(activeUserID).child(fetchedUserID).child("Chats").setValue("Saved").addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                if (task.isSuccessful()){
+
+                    chatsPath.child(fetchedUserID).child(activeUserID).child("Chats").setValue("Saved").addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            if (task.isSuccessful()){
+
+                                chatRequestPath.child(activeUserID).child(fetchedUserID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                        if (task.isSuccessful()){
+
+                                            chatRequestPath.child(fetchedUserID).child(activeUserID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+
+                                                    sendMessageButton.setEnabled(true);
+                                                    activeStatus = "contacts";
+                                                    sendMessageButton.setText("Clear Chat");
+                                                    evaluationButton.setVisibility(View.INVISIBLE);
+                                                    evaluationButton.setEnabled(false);
+
+                                                }
+                                            });
+
+                                        }
+
+                                    }
+                                });
+
+                            }
+
+                        }
+                    });
+
+                }
+
+            }
+        });
 
     }
 

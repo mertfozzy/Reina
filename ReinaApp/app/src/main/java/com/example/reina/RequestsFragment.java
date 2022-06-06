@@ -1,5 +1,7 @@
 package com.example.reina;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -13,10 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.reina.model.contacts;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,7 +37,7 @@ public class RequestsFragment extends Fragment {
     private View requestsFragmentView;
     private RecyclerView requestsList;
 
-    private DatabaseReference chatRequestPath, usersPath;
+    private DatabaseReference chatRequestPath, usersPath, chatsPath;
     private FirebaseAuth mAuth;
     private String activeUserID;
 
@@ -52,6 +57,7 @@ public class RequestsFragment extends Fragment {
         activeUserID = mAuth.getCurrentUser().getUid();
         chatRequestPath = FirebaseDatabase.getInstance().getReference().child("Chat Request");
         usersPath = FirebaseDatabase.getInstance().getReference().child("Users");
+        chatsPath = FirebaseDatabase.getInstance().getReference().child("Chats");
 
         requestsList = requestsFragmentView.findViewById(R.id.chat_requests_list);
         requestsList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -90,16 +96,117 @@ public class RequestsFragment extends Fragment {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                        if (snapshot.hasChild("uid")){
-                                            final String requestUserName = snapshot.child("name").getValue().toString();
-                                            final String requestUserAbout = snapshot.child("about").getValue().toString();
 
-                                            holder.userName.setText(requestUserName);
-                                            holder.userAbout.setText(requestUserAbout);
+                                        final String requestUserName = snapshot.child("name").getValue().toString();
+                                        final String requestUserAbout = snapshot.child("about").getValue().toString();
+                                        holder.userName.setText(requestUserName);
+                                        holder.userAbout.setText("The user wants to chat with you.");
+                                        holder.userName.setTextColor(Color.WHITE);
+                                        holder.userAbout.setTextColor(Color.WHITE);
 
-                                            holder.userName.setTextColor(Color.WHITE);
-                                            holder.userAbout.setTextColor(Color.WHITE);
-                                        }
+
+                                        //every line clicked
+                                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+
+                                                CharSequence options[] = new CharSequence[]{
+                                                        "Accept",
+                                                        "Decline"
+                                                };
+
+                                                //alertdialog
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                builder.setTitle( "Do you confirm " + requestUserName + "'s request?");
+
+                                                builder.setItems(options, new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                                        if (i == 0){
+
+                                                            chatsPath.child(activeUserID).child(user_id_list).child("Chats")
+                                                            .setValue("Saved").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+
+                                                                    if (task.isSuccessful()){
+                                                                        chatsPath.child(user_id_list).child(activeUserID)
+                                                                                .child("Chats").setValue("Saved").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<Void> task) {
+
+                                                                                if (task.isSuccessful()){
+                                                                                    
+                                                                                    chatRequestPath.child(activeUserID).child(user_id_list)
+                                                                                            .removeValue()
+                                                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                                @Override
+                                                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                                                    
+                                                                                                    if (task.isSuccessful()){
+                                                                                                        
+                                                                                                        chatRequestPath.child(user_id_list).child(activeUserID)
+                                                                                                                .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                                            @Override
+                                                                                                            public void onComplete(@NonNull Task<Void> task) {
+
+                                                                                                                Toast.makeText(getContext(), "Chat is saved.", Toast.LENGTH_SHORT).show();
+                                                                                                                
+                                                                                                            }
+                                                                                                        });
+                                                                                                        
+                                                                                                    }
+                                                                                                    
+                                                                                                }
+                                                                                            });
+                                                                                    
+                                                                                }
+                                                                                
+                                                                            }
+                                                                        });
+                                                                    }
+
+                                                                }
+                                                            });
+
+                                                        }
+                                                        if (i == 1){
+
+                                                            chatRequestPath.child(activeUserID).child(user_id_list)
+                                                                    .removeValue()
+                                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                                            if (task.isSuccessful()){
+
+                                                                                chatRequestPath.child(user_id_list).child(activeUserID)
+                                                                                        .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                    @Override
+                                                                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                                                                        Toast.makeText(getContext(), "Chat is deleted.", Toast.LENGTH_SHORT).show();
+
+                                                                                    }
+                                                                                });
+
+                                                                            }
+
+                                                                        }
+                                                                    });
+
+                                                        }
+
+                                                    }
+                                                });
+
+                                                builder.show();
+
+                                            }
+
+
+                                        });
 
                                     }
 

@@ -3,6 +3,7 @@ package com.example.reina;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -41,6 +42,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private static final int galleryOption = 1;
 
+    private Toolbar settingsToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,12 @@ public class SettingsActivity extends AppCompatActivity {
         userName = findViewById(R.id.username_setting);
         userAbout = findViewById(R.id.profile_about);
         profilePhoto = findViewById(R.id.profile_picture_setting);
+
+        settingsToolbar = findViewById(R.id.settings_toolbar);
+        setSupportActionBar(settingsToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Account Settings");
 
         UpdateSettings.setOnClickListener(new View.OnClickListener() {
             @Override

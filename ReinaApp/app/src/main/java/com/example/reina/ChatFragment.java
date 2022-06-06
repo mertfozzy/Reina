@@ -1,5 +1,6 @@
 package com.example.reina;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -73,14 +74,30 @@ public class ChatFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                        final String username = snapshot.child("name").getValue().toString();
-                        final String userabout = snapshot.child("about").getValue().toString();
+                        if (snapshot.exists()){
+                            final String username = snapshot.child("name").getValue().toString();
+                            final String userabout = snapshot.child("about").getValue().toString();
 
-                        holder.userName.setText(username);
-                        holder.userAbout.setText("Last Seen : " + "\n" + "Date" + "Time");
+                            holder.userName.setText(username);
+                            holder.userAbout.setText("Last Seen : " + "\n" + "Date" + " Time");
 
-                        holder.userName.setTextColor(Color.WHITE);
-                        holder.userAbout.setTextColor(Color.WHITE);
+                            holder.userName.setTextColor(Color.WHITE);
+                            holder.userAbout.setTextColor(Color.WHITE);
+
+                            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    //send chat activity
+                                    Intent chatActivity = new Intent(getContext(), ChatActivity.class);
+                                    chatActivity.putExtra("user_id_visit", userIDs);
+                                    chatActivity.putExtra("user_name_visit", username);
+                                    startActivity(chatActivity);
+
+
+                                }
+                            });
+                        }
 
                     }
 

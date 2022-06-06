@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Reina">
         <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".profileActivity"
             android:exported="false" />
         <activity
@@ -29,8 +32,7 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
-            />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".SignupActivity"
             android:exported="false" />

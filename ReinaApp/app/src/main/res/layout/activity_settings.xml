@@ -8,9 +8,8 @@
     tools:context=".SettingsActivity">
 
     <include
-        layout="@layout/app_bar_layout"
         android:id="@+id/settings_toolbar"
-        />
+        layout="@layout/app_bar_layout" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_below="@+id/settings_toolbar"

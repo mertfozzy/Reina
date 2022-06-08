@@ -36,6 +36,7 @@ public class ChatFragment extends Fragment {
     private FirebaseAuth mAuth;
     private String activeUserID;
 
+
     public ChatFragment() {
         // Required empty public constructor
     }

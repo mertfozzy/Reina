@@ -15,7 +15,9 @@
         android:theme="@style/Theme.Reina">
         <activity
             android:name=".ChatActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            />
         <activity
             android:name=".profileActivity"
             android:exported="false" />

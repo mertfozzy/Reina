@@ -219,7 +219,7 @@ public class RequestsFragment extends Fragment {
 
                             else if (type.equals("sent")){
                                 Button requestSendButton = holder.itemView.findViewById(R.id.accept_request_button);
-                                requestSendButton.setText("Request Sent");
+                                requestSendButton.setText("Pending..");
                                 holder.itemView.findViewById(R.id.decline_request_button).setVisibility(View.INVISIBLE);
 
                                 usersPath.child(user_id_list).addValueEventListener(new ValueEventListener() {

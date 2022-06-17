@@ -19,6 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -93,6 +94,18 @@ public class SignupActivity extends AppCompatActivity {
 
                         String existUserID = mAuthentication.getCurrentUser().getUid();
                         rootReference.child("Users").child(existUserID).setValue("");
+
+                        FirebaseMessaging.getInstance().getToken()
+                                .addOnCompleteListener(new OnCompleteListener<String>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<String> task) {
+
+                                        String deviceToken = task.getResult();
+
+                                        rootReference.child("Users").child(existUserID).child("device_token").setValue(deviceToken);
+
+                                    }
+                                });
 
                         Intent mainScreen = new Intent(SignupActivity.this, MainActivity.class);
                         mainScreen.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

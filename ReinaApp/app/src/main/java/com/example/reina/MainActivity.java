@@ -27,6 +27,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser existUser;
     private FirebaseAuth mAuthentication;
     private DatabaseReference usersReference;
+    private String activeUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         mAuthentication = FirebaseAuth.getInstance();
         existUser = mAuthentication.getCurrentUser();
         usersReference = FirebaseDatabase.getInstance().getReference();
+        activeUserID = mAuthentication.getCurrentUser().getUid();
     }
 
     @Override
@@ -70,7 +76,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else{
+            userLastSeenUpdate("online");
             verifyIfUserExist();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (existUser != null){
+            userLastSeenUpdate("offline");
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (existUser != null){
+            userLastSeenUpdate("offline");
         }
     }
 
@@ -83,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if ((dataSnapshot.child("name").exists())){
-                    Toast.makeText(MainActivity.this, "Welcome..", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(MainActivity.this, "Welcome..", Toast.LENGTH_LONG).show();
                 }
                 else{
                     Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
@@ -187,5 +210,28 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void userLastSeenUpdate(String lastSeen){
+
+        String savedActiveTime, savedActiveDate;
+
+        Calendar calendar = Calendar.getInstance();
+
+        //date format
+        SimpleDateFormat activeDate = new SimpleDateFormat("MMM dd, yyyy");
+        savedActiveDate = activeDate.format(calendar.getTime());
+
+        //time format
+        SimpleDateFormat activeTime = new SimpleDateFormat("hh:mm a");
+        savedActiveTime = activeTime.format(calendar.getTime());
+
+        HashMap<String, Object> lastSeenStatusMap = new HashMap<>();
+        lastSeenStatusMap.put("time", savedActiveTime);
+        lastSeenStatusMap.put("date", savedActiveDate);
+        lastSeenStatusMap.put("last_seen_status", lastSeen);
+
+        usersReference.child("Users").child(activeUserID).child("user_last_seen").updateChildren(lastSeenStatusMap);
+
     }
 }

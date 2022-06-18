@@ -34,7 +34,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +50,7 @@ public class ChatActivity extends AppCompatActivity {
     private TextView userName, userLastSeen;
     private CircleImageView profilePhoto;
     private ImageView backToMain;
-    private ImageButton messageSend;
+    private ImageButton messageSend, fileSendButton;
     private EditText messageInput;
     private FirebaseAuth mAuth;
     private DatabaseReference messagePath, userPath;
@@ -57,6 +59,7 @@ public class ChatActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private MessageAdapter messageAdapter;
     private RecyclerView profileMessagesList;
+    private String savedActiveTime, savedActiveDate;
 
 
     @Override
@@ -74,6 +77,7 @@ public class ChatActivity extends AppCompatActivity {
         profilePhoto = findViewById(R.id.userprofilepicture_show_activity);
         backToMain = findViewById(R.id.back_to_main_picture);
         messageSend = findViewById(R.id.private_message_send_button);
+        fileSendButton = findViewById(R.id.send_file_button);
         messageInput = findViewById(R.id.private_message_input);
 
         messageAdapter = new MessageAdapter(messagesList);
@@ -81,6 +85,17 @@ public class ChatActivity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this);
         profileMessagesList.setLayoutManager(linearLayoutManager);
         profileMessagesList.setAdapter(messageAdapter);
+
+        //calendar
+        Calendar calendar = Calendar.getInstance();
+
+        //date format
+        SimpleDateFormat activeDate = new SimpleDateFormat("MMM dd, yyyy");
+        savedActiveDate = activeDate.format(calendar.getTime());
+
+        //time format
+        SimpleDateFormat activeTime = new SimpleDateFormat("hh:mm a");
+        savedActiveTime = activeTime.format(calendar.getTime());
 
         mAuth = FirebaseAuth.getInstance();
         messagePath = FirebaseDatabase.getInstance().getReference();
@@ -126,10 +141,12 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        showLastSeen();
+
     }
 
     private void showLastSeen(){
-        userPath.child("Users").child(IDMessageSender).addValueEventListener(new ValueEventListener() {
+        userPath.child("Users").child(IDValueFetcher).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -224,6 +241,10 @@ public class ChatActivity extends AppCompatActivity {
             messageTextBody.put("message", messageText);
             messageTextBody.put("type", "text");
             messageTextBody.put("who", IDMessageSender);
+            messageTextBody.put("toWho", IDValueFetcher);
+            messageTextBody.put("time", savedActiveTime);
+            messageTextBody.put("date", savedActiveDate);
+            messageTextBody.put("messageID", messageAddingID);
 
             Map messageBodyDetails = new HashMap();
             messageBodyDetails.put(messageSenderPath + "/" + messageAddingID, messageTextBody);

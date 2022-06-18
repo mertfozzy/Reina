@@ -99,7 +99,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.Messages
                 holder.senderMessageText.setVisibility(View.VISIBLE);
                 holder.senderMessageText.setBackgroundResource(R.drawable.sender_message_layout);
                 holder.senderMessageText.setTextColor(Color.WHITE);
-                holder.senderMessageText.setText(messages.getMessage());
+                holder.senderMessageText.setText(messages.getMessage() + "\n" + messages.getTime());
 
             }
 
@@ -111,7 +111,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.Messages
 
                 holder.receiverMessageText.setBackgroundResource(R.drawable.receiver_message_layout);
                 holder.receiverMessageText.setTextColor(Color.WHITE);
-                holder.receiverMessageText.setText(messages.getMessage());
+                holder.receiverMessageText.setText(messages.getMessage() + "\n" + messages.getTime());
             }
         }
 

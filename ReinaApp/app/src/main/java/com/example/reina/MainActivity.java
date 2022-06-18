@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private TabAccessAdapter myTabAccessAdapter;
 
     //Firebase Auth
-    private FirebaseUser existUser;
+    //private FirebaseUser existUser;
     private FirebaseAuth mAuthentication;
     private DatabaseReference usersReference;
     private String activeUserID;
@@ -62,14 +62,16 @@ public class MainActivity extends AppCompatActivity {
 
         //Firebase
         mAuthentication = FirebaseAuth.getInstance();
-        existUser = mAuthentication.getCurrentUser();
+        //existUser = mAuthentication.getCurrentUser();
         usersReference = FirebaseDatabase.getInstance().getReference();
-        activeUserID = mAuthentication.getCurrentUser().getUid();
+        //activeUserID = mAuthentication.getCurrentUser().getUid();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        FirebaseUser existUser = mAuthentication.getCurrentUser();
 
         if (existUser == null){
             send_user_to_LoginActivity();
@@ -84,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        FirebaseUser existUser = mAuthentication.getCurrentUser();
         if (existUser != null){
             userLastSeenUpdate("offline");
         }
@@ -92,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        FirebaseUser existUser = mAuthentication.getCurrentUser();
         if (existUser != null){
             userLastSeenUpdate("offline");
         }
@@ -154,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(settings);
         }
         if (item.getItemId() == R.id.main_logout){
+            userLastSeenUpdate("offline");
             mAuthentication.signOut();
             Intent loginScreen = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(loginScreen);
@@ -230,6 +235,8 @@ public class MainActivity extends AppCompatActivity {
         lastSeenStatusMap.put("time", savedActiveTime);
         lastSeenStatusMap.put("date", savedActiveDate);
         lastSeenStatusMap.put("last_seen_status", lastSeen);
+
+        activeUserID = mAuthentication.getCurrentUser().getUid();
 
         usersReference.child("Users").child(activeUserID).child("user_last_seen").updateChildren(lastSeenStatusMap);
 

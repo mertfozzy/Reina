@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,7 +51,7 @@ public class ChatActivity extends AppCompatActivity {
     private ImageButton messageSend;
     private EditText messageInput;
     private FirebaseAuth mAuth;
-    private DatabaseReference messagePath;
+    private DatabaseReference messagePath, userPath;
 
     private final List<messages> messagesList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
@@ -82,6 +84,7 @@ public class ChatActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         messagePath = FirebaseDatabase.getInstance().getReference();
+        userPath = FirebaseDatabase.getInstance().getReference();
         IDMessageSender = mAuth.getCurrentUser().getUid();
 
 
@@ -123,6 +126,40 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showLastSeen(){
+        userPath.child("Users").child(IDMessageSender).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                //user last seen from database
+                if (snapshot.child("user_last_seen").hasChild("last_seen_status")){
+                    String status = snapshot.child("user_last_seen").child("last_seen_status").getValue().toString();
+                    String date = snapshot.child("user_last_seen").child("date").getValue().toString();
+                    String time = snapshot.child("user_last_seen").child("time").getValue().toString();
+
+                    if (status.equals("online")){
+                        userLastSeen.setText("online");
+                        userLastSeen.setTextColor(Color.WHITE);
+                    }
+                    else if (status.equals("offline")){
+                        userLastSeen.setText("Last Seen : " + date +  " " + time);
+                        userLastSeen.setTextColor(Color.WHITE);
+                    }
+                }
+
+                else {
+                    userLastSeen.setText("offline");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override

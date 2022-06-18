@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,16 +81,38 @@ public class ContactsFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                        if (snapshot.hasChild("uid")){
-                            String username = snapshot.child("name").getValue().toString();
-                            String userabout = snapshot.child("about").getValue().toString();
+                        if (snapshot.exists()){
+                            //user last seen from database
+                            if (snapshot.child("user_last_seen").hasChild("last_seen_status")){
+                                String status = snapshot.child("user_last_seen").child("last_seen_status").getValue().toString();
+                                String date = snapshot.child("user_last_seen").child("date").getValue().toString();
+                                String time = snapshot.child("user_last_seen").child("time").getValue().toString();
 
-                            holder.userName.setText(username);
-                            holder.userAbout.setText(userabout);
+                                if (status.equals("online")){
+                                    holder.onlineIcon.setVisibility(View.VISIBLE);
+                                }
+                                else if (status.equals("offline")){
+                                    holder.onlineIcon.setVisibility(View.INVISIBLE);
+                                }
+                            }
 
-                            holder.userName.setTextColor(Color.WHITE);
-                            holder.userAbout.setTextColor(Color.WHITE);
+                            else {
+                                holder.onlineIcon.setVisibility(View.INVISIBLE);
+                            }
+
+                            if (snapshot.hasChild("uid")){
+                                String username = snapshot.child("name").getValue().toString();
+                                String userabout = snapshot.child("about").getValue().toString();
+
+                                holder.userName.setText(username);
+                                holder.userAbout.setText(userabout);
+
+                                holder.userName.setTextColor(Color.WHITE);
+                                holder.userAbout.setTextColor(Color.WHITE);
+                            }
                         }
+
+
 
                     }
 
@@ -123,6 +146,8 @@ public class ContactsFragment extends Fragment {
 
         TextView userName, userAbout;
         CircleImageView profilePicture;
+        ImageView onlineIcon;
+
 
 
         public ContactsViewHolder(@NonNull View itemView) {
@@ -131,6 +156,7 @@ public class ContactsFragment extends Fragment {
             userName = itemView.findViewById(R.id.user_profile_name);
             userAbout = itemView.findViewById(R.id.user_profile_status);
             profilePicture = itemView.findViewById(R.id.users_profile_pictures);
+            onlineIcon = itemView.findViewById(R.id.user_online_status);
 
         }
     }

@@ -76,14 +76,35 @@ public class ChatFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                         if (snapshot.exists()){
+
                             final String username = snapshot.child("name").getValue().toString();
                             final String userabout = snapshot.child("about").getValue().toString();
 
                             holder.userName.setText(username);
-                            holder.userAbout.setText("Last Seen : " + "\n" + "Date" + " Time");
-
+                            //holder.userAbout.setText("Last Seen : " + "\n" + "Date" + " Time");
                             holder.userName.setTextColor(Color.WHITE);
                             holder.userAbout.setTextColor(Color.WHITE);
+
+                            //user last seen from database
+                            if (snapshot.child("user_last_seen").hasChild("last_seen_status")){
+                                String status = snapshot.child("user_last_seen").child("last_seen_status").getValue().toString();
+                                String date = snapshot.child("user_last_seen").child("date").getValue().toString();
+                                String time = snapshot.child("user_last_seen").child("time").getValue().toString();
+
+                                if (status.equals("online")){
+                                    holder.userAbout.setText("online");
+                                    holder.userAbout.setTextColor(Color.WHITE);
+                                }
+                                else if (status.equals("offline")){
+                                    holder.userAbout.setText("Last Seen : " + date +  " " + time);
+                                    holder.userAbout.setTextColor(Color.WHITE);
+                                }
+                            }
+
+                            else {
+                                holder.userAbout.setText("offline");
+                            }
+
 
                             holder.itemView.setOnClickListener(new View.OnClickListener() {
                                 @Override
